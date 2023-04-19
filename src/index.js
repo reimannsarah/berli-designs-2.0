@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 import ArtService from './artService.js';
 
-function getPaintings() {
-  ArtService.getArtworkId()
+function getPaintings(userInput) {
+  ArtService.getArtworkId(userInput)
     .then(response => {
       return response;
     })
@@ -19,12 +19,10 @@ function getPaintings() {
             let image = document.createElement("img");
             image.src = response.url;
             document.querySelector('#output').append(image);
-          })
-      })
+          });
+      });
     });
 }
-
-getPaintings();
 
 function getId(response) {
   const dataArray = [];
@@ -32,5 +30,13 @@ function getId(response) {
     dataArray.push(datum.id);
   });
   return (dataArray.join(','));
-
 }
+
+function handleFormSubmission(e) {
+  e.preventDefault();
+  let userInput = document.getElementById("input").value;
+  document.getElementById("output").innerHTML = null;
+  getPaintings(userInput);
+}
+
+document.querySelector("form").addEventListener("submit", handleFormSubmission);
