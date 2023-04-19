@@ -8,61 +8,15 @@ body {
     box-sizing: border-box;
 }
 
-h1 {
-    color: #B0413E;
-    text-align: center;
-}
-
-h2 {
-    font-size: 20px;
-    text-align: center;
-    margin: 30px;
-}
-
-.container {
+#output {
     display: flex;
-    justify-content: space-evenly;
-    margin-top: 20px;
-}
-
-.column {
-    width: 25vw;
-    text-align: center;
-    background: #E1F0C4;
-    padding: 12px;
-    border-radius: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
 img {
-    width: 90%;
+    width: 40vw;
     border-radius: 8px;
-}
-
-.column > h3 {
-    font-style: italic;
-    color: #073B4C;
-}
-
-.column > p {
-    text-align: left;
-}
-
-.top-nav {
-    background-color: #DF9A57;
-    padding: 0 8px;
-    border-radius: 8px;
-    margin-bottom: 12px;
-    display: flex;
-    justify-content: space-around;
-}
-
-.menu {
-    display: inline-block;
-    padding: 8px;
-}
-
-.reviews {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }

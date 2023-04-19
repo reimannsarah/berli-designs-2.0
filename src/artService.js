@@ -1,5 +1,3 @@
-// https://api.artic.edu/api/v1/artworks/`${id}`?fields=image_id
-
 export default class ArtService {
   static async getArtworkId(userInput) {
     return fetch(`https://api.artic.edu/api/v1/artworks/search?q=${userInput}&limit=20&fields=id`)

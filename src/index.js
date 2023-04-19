@@ -39,4 +39,12 @@ function handleFormSubmission(e) {
   getPaintings(userInput);
 }
 
+function clickAnImage(e) {
+  let outputDiv = document.getElementById("output");
+  document.getElementById("output").innerHTML = null;
+  outputDiv.append(e.target);
+
+}
+
 document.querySelector("form").addEventListener("submit", handleFormSubmission);
+document.querySelector("#output").addEventListener("click", clickAnImage);
