@@ -8,13 +8,14 @@
     --aquamarine: #a6f5c8;
 }
 
+
+
 body {
     background-color: var(--dark-yellow);
     font-family: 'Playfair Display', serif;;
     margin: 10px;
     padding: 10px;
     box-sizing: border-box;
-    text-transform: uppercase;
 }
 
 h1 {
@@ -92,4 +93,27 @@ img:hover {
 .err {
     display: flex;
     flex-direction: column;
+}
+
+#mood-board {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    padding: 40px;
+}
+
+#poetry {
+    grid-area: 1 / 1 / 6 / 7;
+}
+
+#picture img {
+    width: 500px;
+    padding: 0;
+}
+#picture {
+    grid-area: 3 / 2 / 6 / 6;
+}
+
+.hidden {
+    display: none;
 }
