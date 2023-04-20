@@ -1,80 +1,20 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import ArtService from './artService.js';
-import PoetryService from './poetry-service.js';
-import EmojiService from './emoji-service.js';
+import { getPaintings, getDogs, getPoem, getEmoji } from './business';
 
-function getPaintings(userInput) {
-  ArtService.getArtworkId(userInput)
-    .then(response => {
-      if (response instanceof Error) {
-        const errorMessage = `there was a problem accessing ${userInput} art:
-        ${response.message}`;
-        throw new Error(errorMessage);
-      }
-      return response;
-    })
-    .then(response2 => {
-      const ids = getId(response2);
-      return ArtService.getImageId(ids);
-    })
-    .then(response3 => {
-      if (response3 instanceof Error) {
-        const errorMessage = `Well gee I dunno what happened:
-        ${response3.message}`;
-        throw new Error(errorMessage);
-      }
-      response3.data.forEach(image => {
-        ArtService.getImage(image.image_id)
-          .then(response => {
-            if (response instanceof Error) {
-              const errorMessage = `Whoops! Couldn't find image: ${response.message}`;
-              throw new Error(errorMessage);
-            }
-            showImages(response.url);
-          })
-          .catch(error => {
-            imageError(error);
-          });
-      });
-    })
-    .catch(error => {
-      printError(error);
-    });
-}
-
-function getPoem() {
-  PoetryService.getPoem()
-    .then(response => {
-      if (response instanceof Error) {
-        const errorMessage = `Oops! No poem for you!: ${response.message}`;
-        throw new Error(errorMessage);
-      }
-      printPoem(response);
-    })
-    .catch(error => {
-      printError(error);
-    });
-}
-
-function getEmoji() {
-  EmojiService.getEmoji()
-    .then(response => {
-      if (response instanceof Error) {
-        const errorMessage = `Couldn't find any emojis ${response.message}`;
-        throw new Error(errorMessage);
-      }
-      printEmoji(response);
-    })
-    .catch(error => {
-      printError(error);
-    });
-}
 
 // UI Logic
 
-function showImages(url) {
+export function getId(response) {
+  const dataArray = [];
+  response.data.forEach(datum => {
+    dataArray.push(datum.id);
+  });
+  return (dataArray.join(','));
+}
+
+export function showImages(url) {
   const div = document.createElement("div");
   div.classList = "frame";
   let image = document.createElement("img");
@@ -83,7 +23,7 @@ function showImages(url) {
   document.querySelector('#output').append(div);
 }
 
-function imageError(message) {
+export function imageError(message) {
   const outputDiv = document.querySelector('#output');
   const div = document.createElement("div");
   const image = document.createElement("img");
@@ -97,43 +37,7 @@ function imageError(message) {
   outputDiv.append(div);
 }
 
-function printError(message) {
-  const errorDiv = document.getElementById("error");
-  errorDiv.innerText = message;
-
-  const img = document.createElement('img');
-  img.src = "./assets/images/during.jpg";
-  errorDiv.append(img);
-}
-
-function getId(response) {
-  const dataArray = [];
-  response.data.forEach(datum => {
-    dataArray.push(datum.id);
-  });
-  return (dataArray.join(','));
-}
-
-function handleFormSubmission(e) {
-  e.preventDefault();
-  let userInput = document.getElementById("input").value;
-  document.getElementById("output").innerHTML = null;
-  getPaintings(userInput);
-}
-
-function clickAnImage(e) {
-  const outputDiv = document.getElementById("output");
-  const pictureDiv = document.getElementById("picture");
-  const emojiDiv = document.getElementById("emoji");
-  pictureDiv.innerHTML = null;
-  outputDiv.innerHTML = null;
-  emojiDiv.innerHTML = null;
-  pictureDiv.append(e.target);
-  getPoem();
-  getEmoji();
-}
-
-function printPoem(poem) {
+export function printPoem(poem) {
   document.getElementById("poetry").classList.remove("hidden");
   let poetry = '';
   if (poem[0].lines.length > 19) {
@@ -150,8 +54,46 @@ function printPoem(poem) {
   document.getElementById("poetry").innerText = poetry;
 }
 
-function printEmoji(emoji) {
+export function printEmoji(emoji) {
   document.getElementById("emoji").innerHTML = emoji.htmlCode[0];
+}
+
+export function printDogs(dog) {
+  const dogDiv = document.getElementById("doggie");
+  const image = document.createElement("img");
+  image.src = dog[0];
+  dogDiv.append(image);
+}
+
+function handleFormSubmission(e) {
+  e.preventDefault();
+  let userInput = document.getElementById("input").value;
+  document.getElementById("output").innerHTML = null;
+  getPaintings(userInput);
+}
+
+function clickAnImage(e) {
+  reset();
+  document.getElementById("picture").append(e.target);
+  getPoem();
+  getEmoji();
+  getDogs();
+}
+
+function reset() {
+  document.getElementById("output").innerHTML = null;
+  document.getElementById("picture").innerHTML = null;
+  document.getElementById("emoji").innerHTML = null;
+  document.getElementById("doggie").innerHTML = null;
+}
+
+export function printError(message) {
+  const errorDiv = document.getElementById("error");
+  errorDiv.innerText = message;
+
+  const img = document.createElement('img');
+  img.src = "./assets/images/during.jpg";
+  errorDiv.append(img);
 }
 
 document.querySelector("form").addEventListener("submit", handleFormSubmission);
