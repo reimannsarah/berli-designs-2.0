@@ -2,6 +2,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 import ArtService from './artService.js';
+import PoetryService from './poetry-service';
 
 function getPaintings(userInput) {
   ArtService.getArtworkId(userInput)
@@ -24,18 +25,13 @@ function getPaintings(userInput) {
         throw new Error(errorMessage);
       }
       response3.data.forEach(image => {
-        console.log(response3);
         ArtService.getImage(image.image_id)
           .then(response => {
-            console.log(response);
             if (response instanceof Error) {
-              const errorMessage = `Whoops! Couldn't find image: 
-              ${response.message}`;
+              const errorMessage = `Whoops! Couldn't find image: ${response.message}`;
               throw new Error(errorMessage);
             }
-            let image = document.createElement("img");
-            image.src = response.url;
-            document.querySelector('#output').append(image);
+            showImages(response.url);
           })
           .catch(error => {
             imageError(error);
@@ -47,21 +43,49 @@ function getPaintings(userInput) {
     });
 }
 
+function getPoem() {
+  PoetryService.getPoem()
+    .then(response => {
+      if (response instanceof Error) {
+        const errorMessage = `Oops! No poem for you!: ${response.message}`;
+        throw new Error(errorMessage);
+      }
+      printPoem(response);
+    })
+    .catch(error => {
+      return error;
+    });
+}
+
+// UI Logic
+
+function showImages(url) {
+  const div = document.createElement("div");
+  div.classList = "frame";
+  let image = document.createElement("img");
+  image.src = url;
+  div.append(image);
+  document.querySelector('#output').append(div);
+}
+
 function imageError(message) {
   const outputDiv = document.querySelector('#output');
+  const div = document.createElement("div");
   const image = document.createElement("img");
   const p = document.createElement("p");
 
+  div.classList = "err";
   p.innerText = message;
   image.src = "./assets/images/before.jpg";
-  p.append(image);
-  outputDiv.append(p);
+  image.classList = "frame";
+  div.append(p, image);
+  outputDiv.append(div);
 }
 
 function printError(message) {
   const errorDiv = document.getElementById("error");
   errorDiv.innerText = message;
-  
+
   const img = document.createElement('img');
   img.src = "./assets/images/during.jpg";
   errorDiv.append(img);
@@ -86,7 +110,15 @@ function clickAnImage(e) {
   let outputDiv = document.getElementById("output");
   document.getElementById("output").innerHTML = null;
   outputDiv.append(e.target);
+  getPoem();
+}
 
+function printPoem(poem) {
+  let poetry = '';
+  poem[0].lines.forEach(line => {
+    poetry += ` ${line}`;
+  });
+  document.getElementById("poetry").innerText = poetry;
 }
 
 document.querySelector("form").addEventListener("submit", handleFormSubmission);
