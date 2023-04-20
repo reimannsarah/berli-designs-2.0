@@ -54,7 +54,7 @@ function getPoem() {
       printPoem(response);
     })
     .catch(error => {
-      return error;
+      printError(error);
     });
 }
 
@@ -68,7 +68,7 @@ function getEmoji() {
       printEmoji(response);
     })
     .catch(error => {
-      return error;
+      printError(error);
     });
 }
 
@@ -122,16 +122,19 @@ function handleFormSubmission(e) {
 }
 
 function clickAnImage(e) {
-  let outputDiv = document.getElementById("output");
+  const outputDiv = document.getElementById("output");
   const pictureDiv = document.getElementById("picture");
+  const emojiDiv = document.getElementById("emoji");
   pictureDiv.innerHTML = null;
   outputDiv.innerHTML = null;
+  emojiDiv.innerHTML = null;
   pictureDiv.append(e.target);
   getPoem();
   getEmoji();
 }
 
 function printPoem(poem) {
+  document.getElementById("poetry").classList.remove("hidden");
   let poetry = '';
   if (poem[0].lines.length > 19) {
     for (let i = 0; i < 20; i++) {
@@ -148,7 +151,7 @@ function printPoem(poem) {
 }
 
 function printEmoji(emoji) {
-document.getElementById("emoji").innerHTML = emoji.htmlCode;
+  document.getElementById("emoji").innerHTML = emoji.htmlCode[0];
 }
 
 document.querySelector("form").addEventListener("submit", handleFormSubmission);

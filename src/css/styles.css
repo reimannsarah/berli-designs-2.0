@@ -5,7 +5,7 @@
     --spring-green: #377853;
     --champagne: #F0E2DA;
     --sinopia: #C73E1D;
-    --aquamarine: #a6f5c8;
+    --aquamarine: #a6f5c8a5;
 }
 
 
@@ -34,7 +34,7 @@ form {
     width: 500px;
     margin: 20px auto;
     text-align: center;
-    background-color: #a6f5c8a5;
+    background-color: var(--aquamarine);
     border-radius: 4px;
     padding: 20px;
     font-weight: bold;
@@ -100,10 +100,18 @@ img:hover {
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(6, 1fr);
     padding: 40px;
+    background-color: var(--sinopia);
+    border-radius: 5px;
 }
 
 #poetry {
-    grid-area: 1 / 1 / 6 / 7;
+    grid-area: 1 / 1 / 3 / 5;
+    background-color: var(--aquamarine);
+    width: 80%;
+    margin: auto;
+    padding: 12px;
+    text-align: center;
+    border-radius: 5px;
 }
 
 #emoji {
@@ -114,9 +122,10 @@ img:hover {
 #picture img {
     width: 500px;
     padding: 0;
+    border: 20px solid var(--spring-green);
 }
 #picture {
-    grid-area: 3 / 2 / 6 / 6;
+    grid-area: 2 / 3 / 6 / 6;
 }
 
 .hidden {
