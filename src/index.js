@@ -6,6 +6,11 @@ import ArtService from './artService.js';
 function getPaintings(userInput) {
   ArtService.getArtworkId(userInput)
     .then(response => {
+      if (response instanceof Error) {
+        const errorMessage = `there was a problem accessing ${userInput} art:
+        ${response.message}`;
+        throw new Error(errorMessage);
+      }
       return response;
     })
     .then(response2 => {
@@ -21,7 +26,14 @@ function getPaintings(userInput) {
             document.querySelector('#output').append(image);
           });
       });
+    })
+    .catch(error => {
+      printError(error);
     });
+}
+
+function printError(message) {
+  document.getElementById("error").innerText = message;
 }
 
 function getId(response) {
