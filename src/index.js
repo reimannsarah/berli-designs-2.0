@@ -2,7 +2,8 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 import ArtService from './artService.js';
-import PoetryService from './poetry-service';
+import PoetryService from './poetry-service.js';
+import EmojiService from './emoji-service.js';
 
 function getPaintings(userInput) {
   ArtService.getArtworkId(userInput)
@@ -51,6 +52,20 @@ function getPoem() {
         throw new Error(errorMessage);
       }
       printPoem(response);
+    })
+    .catch(error => {
+      return error;
+    });
+}
+
+function getEmoji() {
+  EmojiService.getEmoji()
+    .then(response => {
+      if (response instanceof Error) {
+        const errorMessage = `Couldn't find any emojis ${response.message}`;
+        throw new Error(errorMessage);
+      }
+      printEmoji(response);
     })
     .catch(error => {
       return error;
@@ -113,12 +128,13 @@ function clickAnImage(e) {
   outputDiv.innerHTML = null;
   pictureDiv.append(e.target);
   getPoem();
+  getEmoji();
 }
 
 function printPoem(poem) {
   let poetry = '';
   if (poem[0].lines.length > 19) {
-    for(let i = 0; i < 20; i++) {
+    for (let i = 0; i < 20; i++) {
       poetry += ` 
       ${poem[0].lines[i]}`;
     }
@@ -129,6 +145,10 @@ function printPoem(poem) {
     });
   }
   document.getElementById("poetry").innerText = poetry;
+}
+
+function printEmoji(emoji) {
+document.getElementById("emoji").innerHTML = emoji.htmlCode;
 }
 
 document.querySelector("form").addEventListener("submit", handleFormSubmission);
