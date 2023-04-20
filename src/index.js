@@ -108,16 +108,26 @@ function handleFormSubmission(e) {
 
 function clickAnImage(e) {
   let outputDiv = document.getElementById("output");
-  document.getElementById("output").innerHTML = null;
-  outputDiv.append(e.target);
+  const pictureDiv = document.getElementById("picture");
+  pictureDiv.innerHTML = null;
+  outputDiv.innerHTML = null;
+  pictureDiv.append(e.target);
   getPoem();
 }
 
 function printPoem(poem) {
   let poetry = '';
-  poem[0].lines.forEach(line => {
-    poetry += ` ${line}`;
-  });
+  if (poem[0].lines.length > 19) {
+    for(let i = 0; i < 20; i++) {
+      poetry += ` 
+      ${poem[0].lines[i]}`;
+    }
+  } else {
+    poetry[0].lines.forEach(line => {
+      poetry += `
+      ${line}`;
+    });
+  }
   document.getElementById("poetry").innerText = poetry;
 }
 
