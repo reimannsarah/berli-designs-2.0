@@ -1,7 +1,7 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import { getPaintings, getDogs, getPoem, getEmoji } from './business';
+import { getPaintings, getDogs, getPoem, getEmoji } from './js/business';
 
 
 // UI Logic
