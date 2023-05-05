@@ -1,13 +1,18 @@
 {
-  "name": "template-repo",
+  "name": "art-inspiration",
   "version": "1.0.0",
+  "repository": {
+    "url": "git+https://github.com/emmalgs/art-inspiration.git"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode=development",
     "start": "webpack-dev-server --open --mode=development",
     "lint": "eslint src --ext .js",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +25,7 @@
     "eslint": "^8.18.0",
     "eslint-webpack-plugin": "^2.7.0",
     "file-loader": "^6.2.0",
+    "gh-pages": "^5.0.0",
     "html-loader": "^1.3.2",
     "html-webpack-plugin": "^4.5.2",
     "jest": "^24.9.0",
