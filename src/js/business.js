@@ -1,8 +1,8 @@
 import ArtService from "./artService";
-import DogService from "./dog-service";
-import PoetryService from "./poetry-service";
-import EmojiService from "./emoji-service";
-import { getId, showImages, imageError, printError, printDogs, printPoem, printEmoji } from "./index.js";
+import DogService from "../dog-service";
+import PoetryService from "../poetry-service";
+import EmojiService from "../emoji-service";
+import { getId, showImages, imageError, printError, printDogs, printPoem, printEmoji } from "../index.js";
 
 export function getPaintings(userInput) {
   ArtService.getArtworkId(userInput)
