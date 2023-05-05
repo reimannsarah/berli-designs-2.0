@@ -1,8 +1,9 @@
 # Art Inspirer
+### By Emma Gerigscott and Sarah Reimann
+
+![moving image of user on webpage](./src/assets/images/sample.gif)
 
 #### Search a "vibe" and see related art pieces from the Chicago Art Institute! Click on an image you like to get a poem.
-
-#### By Emma Gerigscott and Sarah Reimann
 
 ## Technologies Used
 
